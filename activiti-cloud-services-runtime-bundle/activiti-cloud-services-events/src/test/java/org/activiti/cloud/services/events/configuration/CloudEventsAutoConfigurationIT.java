@@ -61,7 +61,7 @@ public class CloudEventsAutoConfigurationIT {
         private ProcessSecurityPoliciesManager processSecurityPoliciesManager;
     }
     
-    @Value("${spring.cloud.stream.rabbit.bindings.auditProducer.producer.routing-key-expression}")
+    @Value("${activiti.cloud.events.routing-key-expression}")
     private String defaultRoutingKeyExpression;
 
     @Test

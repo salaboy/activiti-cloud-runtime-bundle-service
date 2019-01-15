@@ -98,7 +98,7 @@ public class ServiceTaskIntegrationResultEventHandler {
     }
 
     private void sendAuditMessage(IntegrationResult integrationResult) {
-        if (runtimeBundleProperties.getEventsProperties().isIntegrationAuditEventsEnabled()) {
+        if (runtimeBundleProperties.getEventsEnabled()) {
             CloudIntegrationResultReceivedImpl integrationResultReceived = new CloudIntegrationResultReceivedImpl(integrationResult.getIntegrationContext());
             runtimeBundleInfoAppender.appendRuntimeBundleInfoTo(integrationResultReceived);
             Message<CloudIntegrationResultReceivedImpl> message = MessageBuilder.withPayload(

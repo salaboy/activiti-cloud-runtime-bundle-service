@@ -17,6 +17,8 @@
 package org.activiti.cloud.services.core.conf;
 
 import org.activiti.cloud.services.core.pageable.SpringPageConverter;
+import org.activiti.image.ProcessDiagramGenerator;
+import org.activiti.image.impl.DefaultProcessDiagramGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,5 +28,10 @@ public class ServicesCoreAutoConfiguration {
     @Bean
     public SpringPageConverter pageConverter(){
         return new SpringPageConverter();
+    }
+
+    @Bean
+    public ProcessDiagramGenerator processDiagramGenerator(){
+        return new DefaultProcessDiagramGenerator();
     }
 }

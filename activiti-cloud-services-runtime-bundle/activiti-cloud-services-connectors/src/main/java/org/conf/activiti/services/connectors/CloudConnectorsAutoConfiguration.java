@@ -26,18 +26,25 @@ import org.activiti.runtime.api.connector.VariablesMatchHelper;
 import org.activiti.services.connectors.behavior.MQServiceTaskBehavior;
 import org.activiti.services.connectors.message.IntegrationContextMessageBuilderFactory;
 import org.conf.activiti.runtime.api.ConnectorsAutoConfiguration;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cloud.stream.binder.rabbit.properties.RabbitProducerProperties;
+import org.springframework.cloud.stream.binding.BinderAwareChannelResolver.NewDestinationBindingCallback;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.expression.Expression;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 @Configuration
 @AutoConfigureBefore(value = ConnectorsAutoConfiguration.class)
-@ComponentScan("org.activiti.core.common.spring.connector")
+@ConditionalOnProperty(value = "activiti.cloud.connector.enabled", matchIfMissing = true)
 @PropertySource("classpath:config/integration-result-stream.properties")
 public class CloudConnectorsAutoConfiguration {
 

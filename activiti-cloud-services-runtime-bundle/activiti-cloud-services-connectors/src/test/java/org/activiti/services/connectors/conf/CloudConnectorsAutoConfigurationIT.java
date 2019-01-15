@@ -72,7 +72,7 @@ public class CloudConnectorsAutoConfigurationIT {
     @MockBean
     private CloudProcessDeployedProducer processDeployedProducer;
     
-    @Value("${activiti.spring.cloud.stream.connector.integrationRequestSender.routing-key-expression}")
+    @Value("${activiti.cloud.connector.routing-key-expression}")
     private String routingKeyExpression;
     
 
@@ -105,20 +105,6 @@ public class CloudConnectorsAutoConfigurationIT {
             return mock(RuntimeService.class);
         }
 
-        @Bean
-        public UserGroupManager userGroupManager() {
-            return mock(UserGroupManager.class);
-        }
-
-        @Bean
-        public SecurityManager securityManager() {
-            return mock(SecurityManager.class);
-        }
-
-        @Bean
-        public ProcessSecurityPoliciesManager processSecurityPoliciesManager() {
-            return mock(ProcessSecurityPoliciesManager.class);
-        }
 
     }
 }

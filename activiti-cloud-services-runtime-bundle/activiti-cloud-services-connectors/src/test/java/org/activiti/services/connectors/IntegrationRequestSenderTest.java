@@ -85,14 +85,13 @@ public class IntegrationRequestSenderTest {
             setServiceType(SERVICE_TYPE);
             setServiceVersion(SERVICE_VERSION);
             setRbSpringAppName(SPRING_APP_NAME);
+            setEventsEnabled(true);
+            setConnectorsEnabled(true);
         }
     };
 
     @Mock
     private RuntimeBundleInfoAppender runtimeBundleInfoAppender;
-
-    @Mock
-    private RuntimeBundleProperties.RuntimeBundleEventsProperties eventsProperties;
 
     private IntegrationContextMessageBuilderFactory messageBuilderFactory;
 
@@ -160,7 +159,6 @@ public class IntegrationRequestSenderTest {
 
     private void configureProperties() {
         when(runtimeBundleProperties.getServiceFullName()).thenReturn(APP_NAME);
-        when(runtimeBundleProperties.getEventsProperties()).thenReturn(eventsProperties);
     }
 
     @Test
@@ -180,7 +178,7 @@ public class IntegrationRequestSenderTest {
     @Test
     public void shouldNotSendIntegrationAuditEventWhenIntegrationAuditEventsAreDisabled() {
         //given
-        given(eventsProperties.isIntegrationAuditEventsEnabled()).willReturn(false);
+        given(runtimeBundleProperties.getEventsEnabled()).willReturn(false);
 
         //when
         integrationRequestSender.sendIntegrationRequest(integrationRequest);
@@ -193,7 +191,7 @@ public class IntegrationRequestSenderTest {
     @Test
     public void shouldSendIntegrationAuditEventWhenIntegrationAuditEventsAreEnabled() {
         //given
-        given(eventsProperties.isIntegrationAuditEventsEnabled()).willReturn(true);
+        given(runtimeBundleProperties.getEventsEnabled()).willReturn(true);
 
         //when
         integrationRequestSender.sendIntegrationRequest(integrationRequest);

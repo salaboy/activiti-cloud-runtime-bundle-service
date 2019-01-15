@@ -21,7 +21,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties(prefix = "activiti.cloud.runtime-bundle")
+@ConfigurationProperties(prefix = "activiti.cloud")
 public class RuntimeBundleProperties {
 	
     @Value("${spring.application.name}")
@@ -39,8 +39,29 @@ public class RuntimeBundleProperties {
     @Value("${activiti.cloud.application.version:}")
     private String appVersion;
 
-    private RuntimeBundleEventsProperties eventsProperties = new RuntimeBundleEventsProperties();
-    
+    @Value("${activiti.cloud.connectors.enabled:#{new Boolean('true')}}")
+    private Boolean connectorsEnabled;
+
+    @Value("${activiti.cloud.events.enabled:#{new Boolean('true')}}")
+    private Boolean eventsEnabled;
+
+    public Boolean getConnectorsEnabled() {
+        return connectorsEnabled;
+    }
+
+    public void setConnectorsEnabled(Boolean connectorsEnabled) {
+        this.connectorsEnabled = connectorsEnabled;
+    }
+
+    public Boolean getEventsEnabled() {
+        return eventsEnabled;
+    }
+
+    public void setEventsEnabled(Boolean eventsEnabled) {
+        this.eventsEnabled = eventsEnabled;
+    }
+
+
     public String getRbSpringAppName() {
         return rbSpringAppName;
     }
@@ -91,24 +112,5 @@ public class RuntimeBundleProperties {
         this.appVersion = appVersion;
     }
 
-    public RuntimeBundleEventsProperties getEventsProperties() {
-        return eventsProperties;
-    }
 
-    public void setEventsProperties(RuntimeBundleEventsProperties eventsProperties) {
-        this.eventsProperties = eventsProperties;
-    }
-
-    public static class RuntimeBundleEventsProperties {
-
-        private boolean integrationAuditEventsEnabled;
-
-        public boolean isIntegrationAuditEventsEnabled() {
-            return integrationAuditEventsEnabled;
-        }
-
-        public void setIntegrationAuditEventsEnabled(boolean integrationAuditEventsEnabled) {
-            this.integrationAuditEventsEnabled = integrationAuditEventsEnabled;
-        }
-    }
 }

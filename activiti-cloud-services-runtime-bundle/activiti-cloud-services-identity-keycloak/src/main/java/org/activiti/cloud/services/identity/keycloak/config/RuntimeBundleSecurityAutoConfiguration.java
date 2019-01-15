@@ -29,10 +29,14 @@ import org.keycloak.adapters.springsecurity.filter.KeycloakPreAuthActionsFilter;
 import org.keycloak.adapters.springsecurity.filter.KeycloakSecurityContextRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.Resource;
 
 @KeycloakConfiguration
+@ConditionalOnProperty(value="activiti.cloud.keycloak.enabled",matchIfMissing=true)
+@PropertySource("classpath:config/rb-keycloak.properties")
 public class RuntimeBundleSecurityAutoConfiguration extends CommonSecurityAutoConfiguration {
 
     @Value("${keycloak.configurationFile:WEB-INF/keycloak.json}")

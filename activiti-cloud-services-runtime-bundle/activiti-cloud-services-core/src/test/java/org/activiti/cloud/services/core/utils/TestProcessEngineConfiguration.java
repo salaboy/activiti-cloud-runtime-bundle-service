@@ -81,11 +81,6 @@ public class TestProcessEngineConfiguration {
     }
 
     @Bean
-    public ProcessDiagramGenerator processDiagramGenerator() {
-        return new DefaultProcessDiagramGenerator();
-    }
-
-    @Bean
     public ProcessValidator processValidator() {
         ProcessValidatorImpl processValidator = new ProcessValidatorImpl();
         processValidator.addValidatorSet(new ValidatorSetFactory().createActivitiExecutableProcessValidatorSet());
@@ -97,8 +92,4 @@ public class TestProcessEngineConfiguration {
         return new MockMessageChannel();
     }
 
-    @Bean
-    public UserDetailsService myUserDetailsService() {
-        return new InMemoryUserDetailsManager();
-    }
 }

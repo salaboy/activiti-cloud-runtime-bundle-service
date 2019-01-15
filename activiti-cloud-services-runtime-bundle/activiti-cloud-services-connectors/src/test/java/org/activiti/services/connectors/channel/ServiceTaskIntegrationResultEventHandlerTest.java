@@ -75,8 +75,6 @@ public class ServiceTaskIntegrationResultEventHandlerTest {
     @Mock
     private ConnectorActionDefinitionFinder connectorActionDefinitionFinder;
 
-    @Mock
-    private RuntimeBundleProperties.RuntimeBundleEventsProperties eventsProperties;
 
     @Captor
     private ArgumentCaptor<Message<CloudIntegrationResultReceivedImpl>> messageCaptor;
@@ -87,7 +85,6 @@ public class ServiceTaskIntegrationResultEventHandlerTest {
     @Before
     public void setUp() {
         initMocks(this);
-        when(runtimeBundleProperties.getEventsProperties()).thenReturn(eventsProperties);
         when(runtimeBundleProperties.getServiceFullName()).thenReturn("myApp");
         when(runtimeService.createExecutionQuery()).thenReturn(executionQuery);
         when(executionQuery.executionId(anyString())).thenReturn(executionQuery);
@@ -152,7 +149,7 @@ public class ServiceTaskIntegrationResultEventHandlerTest {
                 "v");
 
         given(runtimeBundleProperties.getServiceFullName()).willReturn("myApp");
-        given(runtimeBundleProperties.getEventsProperties().isIntegrationAuditEventsEnabled()).willReturn(true);
+        given(runtimeBundleProperties.getEventsEnabled()).willReturn(true);
 
         IntegrationContextImpl integrationContext = buildIntegrationContext(variables);
 
@@ -183,7 +180,7 @@ public class ServiceTaskIntegrationResultEventHandlerTest {
     @Test
     public void retrieveShouldNotSentAuditEventWhenIntegrationAuditEventsAreDisabled() {
         //given
-        given(runtimeBundleProperties.getEventsProperties().isIntegrationAuditEventsEnabled()).willReturn(false);
+        given(runtimeBundleProperties.getEventsEnabled()).willReturn(false);
 
         IntegrationContextEntityImpl integrationContextEntity = new IntegrationContextEntityImpl();
         String executionId = "execId";
