@@ -15,6 +15,10 @@
       <artifactId>activiti-cloud-services-events</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.activiti</groupId>
+      <artifactId>activiti-spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.activiti.cloud.api</groupId>
       <artifactId>activiti-cloud-api-model-shared-impl</artifactId>
     </dependency>
@@ -121,6 +125,11 @@
     <dependency>
       <groupId>org.activiti.core.common</groupId>
       <artifactId>activiti-spring-security-policies</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

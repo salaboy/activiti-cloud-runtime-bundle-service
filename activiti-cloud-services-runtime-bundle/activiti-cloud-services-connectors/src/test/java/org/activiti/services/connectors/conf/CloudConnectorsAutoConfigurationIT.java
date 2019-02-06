@@ -18,8 +18,7 @@ package org.activiti.services.connectors.conf;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 import org.activiti.api.runtime.shared.identity.UserGroupManager;
 import org.activiti.api.runtime.shared.security.SecurityManager;
@@ -31,6 +30,7 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.impl.persistence.entity.integration.IntegrationContextManager;
+import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.services.connectors.behavior.MQServiceTaskBehavior;
 import org.junit.Before;
 import org.junit.Test;
@@ -74,11 +74,18 @@ public class CloudConnectorsAutoConfigurationIT {
     
     @Value("${activiti.cloud.connector.routing-key-expression}")
     private String routingKeyExpression;
+/*
+    @MockBean
+    private RepositoryService repositoryService;
+
+    @MockBean
+    private ProcessDefinitionQuery processDefinitionQuery;*/
     
 
     @Before
     public void setUp() {
         doNothing().when(processDeployedProducer).onApplicationEvent(any());
+        //when(repositoryService.createProcessDefinitionQuery()).thenReturn(processDefinitionQuery);
     }
 
     @Test
@@ -91,7 +98,7 @@ public class CloudConnectorsAutoConfigurationIT {
         assertThat(behavior).isNotNull();
     }
 
-    @EnableAutoConfiguration
+/*    @EnableAutoConfiguration
     @SpringBootConfiguration
     static class CloudConnectorsAutoConfigurationITApplication {
 
@@ -106,5 +113,5 @@ public class CloudConnectorsAutoConfigurationIT {
         }
 
 
-    }
+    }*/
 }

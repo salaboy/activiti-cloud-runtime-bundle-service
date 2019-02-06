@@ -19,7 +19,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 @AutoConfigureAfter(CloudConnectorsAutoConfiguration.class)
 public class RabbitCloudConnectorsAutoConfiguration {
 
-    @Value("${activiti.spring.cloud.stream.connector.integrationRequestSender.routing-key-expression:headers['routingKey']}")
+    @Value("${activiti.cloud.connector.routing-key-expression:headers['routingKey']}")
     private String routingKeyExpression;
     
     @Bean

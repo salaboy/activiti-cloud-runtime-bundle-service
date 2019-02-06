@@ -16,36 +16,42 @@
 
 package org.conf.activiti.services.connectors;
 
+import org.activiti.cloud.services.events.configuration.CloudEventsAutoConfiguration;
 import org.activiti.cloud.services.events.configuration.RuntimeBundleProperties;
 import org.activiti.cloud.services.events.converter.RuntimeBundleInfoAppender;
 import org.activiti.engine.impl.bpmn.parser.factory.DefaultActivityBehaviorFactory;
 import org.activiti.engine.impl.persistence.entity.integration.IntegrationContextManager;
+import org.activiti.engine.integration.IntegrationContextServiceImpl;
 import org.activiti.runtime.api.connector.ConnectorActionDefinitionFinder;
 import org.activiti.runtime.api.connector.IntegrationContextBuilder;
 import org.activiti.runtime.api.connector.VariablesMatchHelper;
+import org.activiti.services.connectors.IntegrationRequestSender;
 import org.activiti.services.connectors.behavior.MQServiceTaskBehavior;
+import org.activiti.services.connectors.channel.ServiceTaskIntegrationResultEventHandler;
 import org.activiti.services.connectors.message.IntegrationContextMessageBuilderFactory;
+//import org.activiti.spring.boot.ProcessEngineAutoConfiguration;
+import org.activiti.spring.boot.ProcessEngineAutoConfiguration;
 import org.conf.activiti.runtime.api.ConnectorsAutoConfiguration;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.cloud.stream.binder.rabbit.properties.RabbitProducerProperties;
-import org.springframework.cloud.stream.binding.BinderAwareChannelResolver.NewDestinationBindingCallback;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.expression.Expression;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 @Configuration
+//needed as connectors is using IntegrationContextServiceImpl, CommandExecutorImpl etc.
+@AutoConfigureAfter({ProcessEngineAutoConfiguration.class,CloudEventsAutoConfiguration.class})
 @AutoConfigureBefore(value = ConnectorsAutoConfiguration.class)
-@ConditionalOnProperty(value = "activiti.cloud.connector.enabled", matchIfMissing = true)
+@ConditionalOnProperty(value = "activiti.cloud.connectors.enabled", matchIfMissing = true)
+@ComponentScan({"org.activiti.core.common.spring.connector"})
 @PropertySource("classpath:config/integration-result-stream.properties")
+@Import({ServiceTaskIntegrationResultEventHandler.class,IntegrationRequestSender.class})
 public class CloudConnectorsAutoConfiguration {
 
     
